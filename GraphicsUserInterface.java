@@ -13,7 +13,7 @@ public class GraphicsUserInterface extends JFrame implements ActionListener {
 	
 	private int windowWidth = 500;
 	private int windowHieght = 500;
-	private JButton startbtn, stopbtn;
+	private JButton startbtn, stopbtn, showStats;
 	private JLabel lastSessionInfo;
 	private JLabel subjectDescriptions;
 	private ButtonGroup subjects;
@@ -29,6 +29,7 @@ public class GraphicsUserInterface extends JFrame implements ActionListener {
 		setSize(windowWidth,windowHieght);
 		setLocationRelativeTo(null);
 		add(startPanel());
+		add(showStats);
 		setResizable(false);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,12 +85,17 @@ public class GraphicsUserInterface extends JFrame implements ActionListener {
 		startbtn.setPreferredSize(new Dimension(btnwidth, btnheight));
 		stopbtn.setPreferredSize(new Dimension(btnwidth, btnheight));
 		checkLastAction();
+		showStats = new JButton("Stats");
+		showStats.setBounds(400, 20, 70, 20);
 	}
 	private void setAction() {
 		startbtn.addActionListener(this);
 		startbtn.setActionCommand("startTime");
 		stopbtn.addActionListener(this);
 		stopbtn.setActionCommand("stopTime");
+		showStats.setEnabled(true);
+		showStats.addActionListener(this);
+		showStats.setActionCommand("showStats");
 	}
 	
 	private void setLabel(String lastAction) {
@@ -115,17 +121,12 @@ public class GraphicsUserInterface extends JFrame implements ActionListener {
 				clearLabel();
 				setLabel("ended");
 				break;
-				
+			case "showStats":
+				new StatsWindow();
+				break;
+			default:
+				break;	
 		}
-//		if (e.getActionCommand().equals("startTime")) {
-//			dateClass.start("start");
-//			clearLabel();
-//			setLabel("started");
-//		} else if (e.getActionCommand().equals("stopTime")) {
-//			dateClass.start("end");
-//			clearLabel();
-//			setLabel("ended");
-//		}
 		checkLastAction();
 		repaint();
 		
